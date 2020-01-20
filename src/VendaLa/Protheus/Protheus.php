@@ -5,6 +5,7 @@ namespace VendaLa\Protheus;
 use BuzzinaSocial\Http\Client as HttpClient;
 use VendaLa\Protheus\Auth\Auth;
 use VendaLa\Protheus\Contracts\Authentication;
+use VendaLa\Protheus\Resources\Products;
 
 /**
  * Class Protheus.
@@ -46,6 +47,14 @@ class Protheus extends HttpClient
     }
 
     /**
+     * @return Products
+     */
+    public function products(): Products
+    {
+        return new Products($this);
+    }
+
+    /**
      * @throws \Exception
      */
     private function createNewSession(): void
@@ -53,8 +62,11 @@ class Protheus extends HttpClient
         $this->setHeaders([
             'accept' => 'application/json',
             'Content-Type' => 'application/json',
-            'auth' => [$this->basicAuth->getUsername(), $this->basicAuth->getPassword()]
         ]);
+
+        $this->setSettings('auth', [$this->basicAuth->getUsername(), $this->basicAuth->getPassword()]);
+
+        $this->setSettings('timeout', 30);
 
         $this->setBaseURI($this->endpoint);
     }

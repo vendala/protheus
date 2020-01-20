@@ -2,15 +2,16 @@
 
 namespace VendaLa\Protheus\Exceptions;
 
+use Exception;
 use Throwable;
-use VendaLa\Protheus\Contracts\Authentication;
+use VendaLa\Protheus\Contracts\ProtheusExceptionContract;
 
 /**
- * Class AuthenticationException
+ * Class ProtheusException
  *
  * @package VendaLa\Protheus\Exceptions
  */
-class AuthenticationException extends ProtheusException implements Authentication
+class ProtheusException extends Exception implements Throwable, ProtheusExceptionContract
 {
     /**
      * Construct the exception. Note: The message is NOT binary safe.
@@ -23,7 +24,7 @@ class AuthenticationException extends ProtheusException implements Authenticatio
      *
      * @since 5.1.0
      */
-    public function __construct($message = "", $code = 1000, Throwable $previous = null)
+    public function __construct($message = "", $code = 2000, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
