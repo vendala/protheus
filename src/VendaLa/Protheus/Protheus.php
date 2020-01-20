@@ -51,9 +51,9 @@ class Protheus extends HttpClient
     private function createNewSession(): void
     {
         $this->setHeaders([
-            'a-ccept' => 'application/json',
+            'accept' => 'application/json',
             'Content-Type' => 'application/json',
-            'auth', [$this->basicAuth->getUsername(), $this->basicAuth->getPassword()]
+            'auth' => [$this->basicAuth->getUsername(), $this->basicAuth->getPassword()]
         ]);
 
         $this->setBaseURI($this->endpoint);
