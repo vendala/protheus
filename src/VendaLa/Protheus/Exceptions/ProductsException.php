@@ -43,6 +43,16 @@ class ProductsException extends ProtheusException implements ProtheusExceptionCo
     public const CODE_FIND_BY_SKU = 1002;
 
     /**
+     * @const strings'
+     */
+    public const MESSAGE_DELETE_ON_QUEUE = 'Erro ao remover produtos da fila.';
+
+    /**
+     * @const int
+     */
+    public const CODE_DELETE_ON_QUEUE = 1003;
+
+    /**
      * Construct the exception. Note: The message is NOT binary safe.
      *
      * @link  https://php.net/manual/en/exception.construct.php

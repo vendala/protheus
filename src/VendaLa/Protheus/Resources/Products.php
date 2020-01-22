@@ -3,6 +3,7 @@
 namespace VendaLa\Protheus\Resources;
 
 use GuzzleHttp\Exception\RequestException;
+use stdClass;
 use VendaLa\Protheus\Contracts\ResourceFacotry;
 use VendaLa\Protheus\Exceptions\ProductsException;
 use VendaLa\Protheus\Helpers\Pagination;
@@ -23,7 +24,12 @@ class Products extends Pagination implements ResourceFacotry
     /**
      * @const string
      */
-    private const PATH = 'rest/NO2W001A';
+    private const GET_PATH = 'rest/NO2W001A';
+
+    /**
+     * @const string
+     */
+    private const DELETE_PATH = 'rest/NO2W001B';
 
     /**
      * @var string
@@ -79,11 +85,41 @@ class Products extends Pagination implements ResourceFacotry
     {
         try {
             $this->structureBody();
-            return $this->protheus->post(self::PATH, $this->body);
+            return $this->protheus->post(self::GET_PATH, $this->body);
         } catch (RequestException $requestException) {
             ## TODO: Add log
 
             throw new ProductsException($this->defineMessageException(), $this->defineCodeExcption());
+        } finally {
+            $this->reset();
+        }
+    }
+
+    /**
+     * @param array $skus
+     *
+     * @return \GuzzleHttp\Psr7\Response|mixed|\Psr\Http\Message\ResponseInterface
+     *
+     * @throws ProductsException
+     */
+    public function deleteOnQueue(array $skus)
+    {
+        try {
+            $data = new stdClass();
+            $data->products = [];
+
+            foreach ($skus as $sku) {
+                $product = new stdClass();
+                $product->id = $sku;
+
+                $data->products[] = $product;
+            }
+
+            return $this->protheus->post(self::DELETE_PATH, $data);
+        } catch (RequestException $requestException) {
+            ## TODO: Add log
+
+            throw new ProductsException(ProductsException::MESSAGE_DELETE_ON_QUEUE, ProductsException::CODE_DELETE_ON_QUEUE);
         } finally {
             $this->reset();
         }
