@@ -13,9 +13,9 @@
   "require": {
     "php": ">=7.1",
     "ext-json": "*",
-    "illuminate/config": "^7.0",
-    "illuminate/database": "^7.0",
-    "illuminate/support": "^7.0",
+    "illuminate/config": "^5.8|^7.0",
+    "illuminate/database": "^5.8|^7.0",
+    "illuminate/support": "^5.8|^7.0",
     "buzzina-social/http": "^1.1"
   },
   "require-dev": {
