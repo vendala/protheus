@@ -85,7 +85,7 @@ class Products extends Pagination implements ResourceFacotry
     {
         try {
             $this->structureBody();
-            return $this->protheus->post(self::GET_PATH, $this->body);
+            return $this->protheus->post(self::GET_PATH, $this->body)->getBody()->rewind();
         } catch (RequestException $requestException) {
             ## TODO: Add log
 
