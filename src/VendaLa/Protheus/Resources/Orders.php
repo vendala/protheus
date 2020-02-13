@@ -5,8 +5,8 @@ namespace VendaLa\Protheus\Resources;
 use VendaLa\Protheus\Contracts\ResourceFacotry;
 use VendaLa\Protheus\Helpers\Pagination;
 use VendaLa\Protheus\Protheus;
-
 use GuzzleHttp\Exception\RequestException;
+use VendaLa\Protheus\Exceptions\ProductsException;
 
 /**
  * Class Orders.
@@ -19,12 +19,7 @@ class Orders extends Pagination implements ResourceFacotry
     /**
      * @const string
      */
-    private const GET_PATH = 'rest/NO2W003';
-
-    /**
-     * @var array
-     */
-    private $body;
+    private const POST_PATH = 'rest/NO2W002';
 
     /**
      * @var Protheus
@@ -32,7 +27,7 @@ class Orders extends Pagination implements ResourceFacotry
     private $protheus;
 
     /**
-     * Products constructor.
+     * Orders constructor.
      *
      * @param Protheus $protheus
      */
@@ -41,21 +36,30 @@ class Orders extends Pagination implements ResourceFacotry
         $this->protheus = $protheus;
     }
 
-    /**
-     * @return \GuzzleHttp\Psr7\Response|mixed|\Psr\Http\Message\ResponseInterface
-     *
-     * @throws OrdersException
-     */
-    public function get()
+    public function post($order)
     {
         try {
-            $response = $this->protheus->post(self::GET_PATH, $this->body);
+            $response = $this->protheus->post(self::POST_PATH, $order);
             $response->getBody()->rewind();
             return $response;
         } catch (RequestException $requestException) {
-            ## TODO: Add log
-        } finally {
-            
+            throw new ProductsException($requestException->getMessage(), 500);
         }
+    }
+
+    /**
+     * @return string
+     */
+    private function defineMessageException(): string
+    {
+        return  '';
+    }
+
+    /**
+     * @return int
+     */
+    private function defineCodeExcption(): int
+    {
+        return 500;
     }
 }

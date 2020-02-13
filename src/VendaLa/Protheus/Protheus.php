@@ -6,6 +6,7 @@ use BuzzinaSocial\Http\Client as HttpClient;
 use VendaLa\Protheus\Auth\Auth;
 use VendaLa\Protheus\Contracts\Authentication;
 use VendaLa\Protheus\Resources\Products;
+use VendaLa\Protheus\Resources\Orders;
 
 /**
  * Class Protheus.
@@ -52,6 +53,14 @@ class Protheus extends HttpClient
     public function products(): Products
     {
         return new Products($this);
+    }
+
+    /**
+     * @return Orders
+     */
+    public function orders(): Orders
+    {
+        return new Orders($this);
     }
 
     /**
