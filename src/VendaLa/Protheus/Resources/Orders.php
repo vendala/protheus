@@ -2,11 +2,11 @@
 
 namespace VendaLa\Protheus\Resources;
 
+use VendaLa\Protheus\Exceptions\OrdersException;
 use VendaLa\Protheus\Contracts\ResourceFacotry;
+use GuzzleHttp\Exception\RequestException;
 use VendaLa\Protheus\Helpers\Pagination;
 use VendaLa\Protheus\Protheus;
-use GuzzleHttp\Exception\RequestException;
-use VendaLa\Protheus\Exceptions\ProductsException;
 
 /**
  * Class Orders.
@@ -43,7 +43,7 @@ class Orders extends Pagination implements ResourceFacotry
             $response->getBody()->rewind();
             return $response;
         } catch (RequestException $requestException) {
-            throw new ProductsException($requestException->getMessage(), 500);
+            throw new OrdersException($this->defineMessageException(), $this->defineCodeExcption());
         }
     }
 
@@ -52,7 +52,7 @@ class Orders extends Pagination implements ResourceFacotry
      */
     private function defineMessageException(): string
     {
-        return  '';
+        return OrdersException::ORDER_SEND;
     }
 
     /**
@@ -60,6 +60,6 @@ class Orders extends Pagination implements ResourceFacotry
      */
     private function defineCodeExcption(): int
     {
-        return 500;
+        return  OrdersException::CODE_SEND;
     }
 }
