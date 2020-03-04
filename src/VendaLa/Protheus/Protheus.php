@@ -6,6 +6,7 @@ use BuzzinaSocial\Http\Client as HttpClient;
 use VendaLa\Protheus\Auth\Auth;
 use VendaLa\Protheus\Contracts\Authentication;
 use VendaLa\Protheus\Resources\Products;
+use VendaLa\Protheus\Resources\Orders;
 
 /**
  * Class Protheus.
@@ -55,6 +56,14 @@ class Protheus extends HttpClient
     }
 
     /**
+     * @return Orders
+     */
+    public function orders(): Orders
+    {
+        return new Orders($this);
+    }
+
+    /**
      * @throws \Exception
      */
     private function createNewSession(): void
@@ -65,9 +74,7 @@ class Protheus extends HttpClient
         ]);
 
         $this->setSettings('auth', [$this->basicAuth->getUsername(), $this->basicAuth->getPassword()]);
-
         $this->setSettings('timeout', 30);
-
         $this->setBaseURI($this->endpoint);
     }
 }
