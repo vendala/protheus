@@ -66,7 +66,7 @@ class Protheus extends HttpClient
 
         $this->setSettings('auth', [$this->basicAuth->getUsername(), $this->basicAuth->getPassword()]);
 
-        $this->setSettings('timeout', 30);
+        $this->setSettings('timeout', 300);
 
         $this->setBaseURI($this->endpoint);
     }
